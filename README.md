@@ -1,9 +1,11 @@
 # dipole-sky
+The Fig.1 at  *Is the Universe FLRW?*
+
 For the code, we thanks the discussion with Dr. Evgeny Zavarygin.
 
-To use this code please cite the paper: *Is the Universe FLRW?*
+To use this code please cite the paper.
 
-
+![aniso-2](aniso-2.png)
 
 ----
 
