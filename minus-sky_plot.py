@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jun  2 16:16:39 2022
+
+@author: yinlu
+"""
 
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
@@ -187,15 +193,16 @@ for file_name in file_names:
 fig = plt.figure(figsize=(18,10))
 
 ax2 = plt.subplot(122)
-m = Basemap(projection=projection,lat_0=0,lon_0=0) #180)
+m = Basemap(projection=projection,lat_0=0,lon_0=360) #180)
 m.drawparallels(np.arange(-90,90,30))
 m.drawmeridians(np.arange(-180,180,60)) #(0,360,30))
+
 
 # Markers:
 for key in dipoles.keys():
     x, y = m(dipoles[key][0],dipoles[key][1]) # direction
     m.scatter(x,y,s=30,marker='x',color=dipoles[key][2],lw=2.5)
-    x, y = m(dipoles[key][0]-23,dipoles[key][1]+4)
+    x, y = m(dipoles[key][0]-2,dipoles[key][1]+3)
     ax2.text(x,y,'{}'.format(key),color='black',fontsize=7,va='top',ha='right')
     x, y = m(dipoles[key][0]-180.0,-1.0*dipoles[key][1]) # anti-direction
     m.scatter(x,y,s=30,marker='x',color=dipoles[key][2],lw=2.5)
@@ -203,7 +210,7 @@ for key in dipoles.keys():
 for key in dipoles2.keys():
     x, y = m(dipoles2[key][0],dipoles2[key][1]) # direction
     m.scatter(x,y,s=30,marker='x',color=dipoles2[key][2],lw=2.5)
-    x, y = m(dipoles2[key][0]+43,dipoles2[key][1]+2)
+    x, y = m(dipoles2[key][0]+4,dipoles2[key][1]+2)
     ax2.text(x,y,'{}'.format(key),color='black',fontsize=7,va='top',ha='right')
     x, y = m(dipoles2[key][0]-180.0,-1.0*dipoles2[key][1]) # anti-direction
     m.scatter(x,y,s=30,marker='x',color=dipoles2[key][2],lw=2.5)
@@ -211,7 +218,7 @@ for key in dipoles2.keys():
 for key in CMBHPA.keys():
     x, y = m(CMBHPA[key][0],CMBHPA[key][1]) # direction
     m.scatter(x,y,s=10,marker='>',color=CMBHPA[key][2],lw=2.5)
-    x, y = m(CMBHPA[key][0]-3,CMBHPA[key][1]+1)
+    x, y = m(CMBHPA[key][0]-24,CMBHPA[key][1]+1)
     ax2.text(x,y,'{}'.format(key),color='black',fontsize=5,va='top',ha='right')
     x, y = m(CMBHPA[key][0]-180.0,-1.0*CMBHPA[key][1]) # anti-direction
     m.scatter(x,y,s=10,marker='>',color=CMBHPA[key][2],lw=2.5)
@@ -220,49 +227,34 @@ for key in CMBHPA.keys():
 for key in wmap.keys():
     x, y = m(wmap[key][0],wmap[key][1]) # direction
     m.scatter(x,y,s=10,marker='>',color='black',lw=2.5)
-    x, y = m(wmap[key][0]+32,wmap[key][1]+1)
+    x, y = m(wmap[key][0]+5,wmap[key][1]+1)
     ax2.text(x,y,'{}'.format(key),color='black',fontsize=5,va='top',ha='right')
     x, y = m(wmap[key][0]-180.0,-1.0*wmap[key][1]) # anti-direction
     m.scatter(x,y,s=10,marker='>',color='black',lw=2.5)
 
-#single ellipse
-x, y = m(0.0,0.0)
-m.scatter(x,y,s=10,marker='o',color='saddlebrown') # Galactic centre
-m.ellipse(0,0,15,15,100,facecolor='saddlebrown',alpha=0.6,linewidth=0,zorder=1) 
-x, y = m(1.0,10.0)
-ax2.text(x,y,'Galactic Centre',color='black',fontsize=7,va='top',ha='left')
 
-x1, y1=(331.9,-9.6)
-width, height=(7.3, 7.3)
-xval,yval = m(x1,y1)
-m.scatter(xval,yval,color='gold',edgecolor='none',s=20,zorder=2)
-m.ellipse(x1,y1, width, height,100,facecolor='gold',alpha=0.6,linewidth=0,zorder=1)  # only needed for ellipse contour
-xval,yval = m(x1-180.0, -1.0*y1)
-m.scatter(xval,yval,color='gold',edgecolor='none',s=20,zorder=2)
-m.ellipse(x1-180.0, -1.0*y1,width, height,100,facecolor='gold',alpha=0.6,linewidth=0,zorder=1)
-x, y = m(x1+1.0, y1+4.0)
-ax2.text(x,y,'CMB-MTA',color='black',fontsize=7,va='top',ha='left')
-    
+
+
 x1, y1=(307,9)
 width, height=(15, 15)
 xval,yval = m(x1,y1)
-m.scatter(xval,yval,marker='>',color='orange',edgecolor='none',s=20,zorder=2)
+m.scatter(xval,yval,marker='>',color='saddlebrown',lw=2.0)
 #m.ellipse(x1,y1, width, height,100,facecolor='blue',alpha=0.5,linewidth=0,zorder=1)  # only needed for ellipse contour
 #xval,yval = m(x1-180.0, -1.0*y1)
 #m.scatter(xval,yval,color='orange',edgecolor='none',s=20,zorder=2)
 #m.ellipse(x1-180.0, -1.0*y1,width, height,100,facecolor='blue',alpha=0.5,linewidth=0,zorder=1)
-x, y = m(x1+1.0, y1+3.0)
+x, y = m(x1+45.0, y1+2.4)
 ax2.text(x,y,'Great Attractor',color='black',fontsize=7,va='top',ha='left')
 
 x1, y1=(282,6)
 width, height=(11, 6)
 xval,yval = m(x1,y1)
-m.scatter(xval,yval,color='tomato',edgecolor='none',s=20,zorder=2)
-m.ellipse(x1,y1, width, height,100,facecolor='tomato',alpha=0.5,linewidth=0,zorder=1)  # only needed for ellipse contour
+m.scatter(xval,yval,color='firebrick',edgecolor='none',s=20,zorder=2)
+m.ellipse(x1,y1, width, height,100,facecolor='firebrick',alpha=0.6,linewidth=0,zorder=1)  # only needed for ellipse contour
 xval,yval = m(x1-180.0, -1.0*y1)
-m.scatter(xval,yval,color='tomato',edgecolor='none',s=20,zorder=2)
-m.ellipse(x1-180.0, -1.0*y1,width, height,100,facecolor='tomato',alpha=0.5,linewidth=0,zorder=1)
-x, y = m(x1-23.0, y1+6.0)
+m.scatter(xval,yval,color='firebrick',edgecolor='none',s=20,zorder=2)
+m.ellipse(x1-180.0, -1.0*y1,width, height,100,facecolor='firebrick',alpha=0.6,linewidth=0,zorder=1)
+x, y = m(x1+10.0, y1+6.0)
 ax2.text(x,y,'Bulk flow',color='black',fontsize=7,va='top',ha='left')
 
 x1, y1=(290,30)
@@ -273,19 +265,10 @@ m.ellipse(x1,y1, width, height,100,facecolor='darkviolet',alpha=0.55,linewidth=0
 xval,yval = m(x1-180.0, -1.0*y1)
 m.scatter(xval,yval,color='darkviolet',edgecolor='none',s=20,zorder=2)
 m.ellipse(x1-180.0, -1.0*y1,width, height,100,facecolor='darkviolet',alpha=0.55,linewidth=0,zorder=1)
-x, y = m(x1+1.0, y1+5.0)
+x, y = m(x1+8.0, y1-3.0)
 ax2.text(x,y,'Dark flow',color='black',fontsize=7,va='top',ha='left')
 
-x1, y1=(233.44,-13.06)
-width, height=(13, 13)
-xval,yval = m(x1,y1)
-m.scatter(xval,yval,color='limegreen',edgecolor='none',s=20,zorder=2)
-m.ellipse(x1,y1, width, height,100,facecolor='limegreen',alpha=0.5,linewidth=0,zorder=1)  # only needed for ellipse contour
-xval,yval = m(x1-180.0, -1.0*y1)
-m.scatter(xval,yval,color='limegreen',edgecolor='none',s=20,zorder=2)
-m.ellipse(x1-180.0, -1.0*y1,width, height,100,facecolor='limegreen',alpha=0.5,linewidth=0,zorder=1)
-x, y = m(x1+3.0, y1+5.0)
-ax2.text(x,y,'CR-dipole',color='black',fontsize=7,va='top',ha='left')
+
 
 x1, y1=(310.6,-13)
 width, height=(18.2, 11.1)
@@ -295,64 +278,21 @@ m.ellipse(x1,y1, width, height,100,facecolor='dodgerblue',alpha=0.7,linewidth=0,
 xval,yval = m(x1-180.0, -1.0*y1)
 m.scatter(xval,yval,color='dodgerblue',edgecolor='none',s=20,zorder=2)
 m.ellipse(x1-180.0, -1.0*y1,width, height,100,facecolor='dodgerblue',alpha=0.7,linewidth=0,zorder=1)
-x, y = m(x1-10.0, y1-3.0)
+x, y = m(x1+10.0, y1-3.0)
 ax2.text(x,y,'SNe Ia',color='black',fontsize=7,va='top',ha='left')
 
-#New data from review---------------------------------------------------------
-x1, y1=(157,71)
-width, height=(76.7,25)
-xval,yval = m(x1,y1)
-m.scatter(xval,yval,color='darkblue',edgecolor='none',s=20,zorder=2)
-m.ellipse(x1,y1, width, height,100,facecolor='darkblue',alpha=0.5,linewidth=0,zorder=1)  # only needed for ellipse contour
-xval,yval = m(x1+180.0, -1.0*y1)
-m.scatter(xval,yval,color='darkblue',edgecolor='none',s=20,zorder=2)
-m.ellipse(x1+180.0, -1.0*y1,width, height,100,facecolor='darkblue',alpha=0.5,linewidth=0,zorder=1)
-x, y = m(x1-15.0, y1-3.0)
-ax2.text(x,y,'HQSO',color='black',fontsize=7,va='top',ha='left')
 
-x1, y1=(210,49)
-width, height=(29,18)
+
+
+x1, y1=(248,44)
+width, height=(12.5,8)
 xval,yval = m(x1,y1)
 m.scatter(xval,yval,color='darkorange',edgecolor='none',s=20,zorder=2)
 m.ellipse(x1,y1, width, height,100,facecolor='darkorange',alpha=0.7,linewidth=0,zorder=1)  # only needed for ellipse contour
 xval,yval = m(x1-180.0, -1.0*y1)
 m.scatter(xval,yval,color='darkorange',edgecolor='none',s=20,zorder=2)
 m.ellipse(x1-180.0, -1.0*y1,width, height,100,facecolor='darkorange',alpha=0.7,linewidth=0,zorder=1)
-x, y = m(x1-18.0, y1-3.0)
-ax2.text(x,y,'MIRAGN',color='black',fontsize=7,va='top',ha='left')
-
-x1, y1=(252,65)
-width, height=(26,10)
-xval,yval = m(x1,y1)
-m.scatter(xval,yval,color='green',edgecolor='none',s=20,zorder=2)
-m.ellipse(x1,y1, width, height,100,facecolor='green',alpha=0.7,linewidth=0,zorder=1)  # only needed for ellipse contour
-xval,yval = m(x1-180.0, -1.0*y1)
-m.scatter(xval,yval,color='green',edgecolor='none',s=20,zorder=2)
-m.ellipse(x1-180.0, -1.0*y1,width, height,100,facecolor='green',alpha=0.7,linewidth=0,zorder=1)
-x, y = m(x1+5.0, y1+2.0)
-ax2.text(x,y,'SN1a',color='black',fontsize=7,va='top',ha='left')
-
-x1, y1=(270,34)
-width, height=(15.68,12)
-xval,yval = m(x1,y1)
-m.scatter(xval,yval,color='grey',edgecolor='none',s=20,zorder=2)
-m.ellipse(x1,y1, width, height,100,facecolor='grey',alpha=0.5,linewidth=0,zorder=1)  # only needed for ellipse contour
-xval,yval = m(x1-180.0, -1.0*y1)
-m.scatter(xval,yval,color='grey',edgecolor='none',s=20,zorder=2)
-m.ellipse(x1-180.0, -1.0*y1,width, height,100,facecolor='grey',alpha=0.5,linewidth=0,zorder=1)
-x, y = m(x1-15.0, y1-4.0)
-ax2.text(x,y,'DR12Q',color='black',fontsize=7,va='top',ha='left')
-
-
-x1, y1=(248,44)
-width, height=(12.5,8)
-xval,yval = m(x1,y1)
-m.scatter(xval,yval,color='violet',edgecolor='none',s=20,zorder=2)
-m.ellipse(x1,y1, width, height,100,facecolor='violet',alpha=0.5,linewidth=0,zorder=1)  # only needed for ellipse contour
-xval,yval = m(x1-180.0, -1.0*y1)
-m.scatter(xval,yval,color='violet',edgecolor='none',s=20,zorder=2)
-m.ellipse(x1-180.0, -1.0*y1,width, height,100,facecolor='violet',alpha=0.5,linewidth=0,zorder=1)
-x, y = m(x1-12.0, y1-3.0)
+x, y = m(x1+5.0, y1-3.0)
 ax2.text(x,y,'NVSS',color='black',fontsize=7,va='top',ha='left')
 
 x1, y1=(247,52)
@@ -363,39 +303,83 @@ m.ellipse(x1,y1, width, height,100,facecolor='lightskyblue',alpha=0.6,linewidth=
 xval,yval = m(x1-180.0, -1.0*y1)
 m.scatter(xval,yval,color='lightskyblue',edgecolor='none',s=20,zorder=2)
 m.ellipse(x1-180.0, -1.0*y1,width, height,100,facecolor='lightskyblue',alpha=0.6,linewidth=0,zorder=1)
-x, y = m(x1-18.0, y1+6.0)
+x, y = m(x1+15.0, y1+6.0)
 ax2.text(x,y,'TGSS',color='black',fontsize=7,va='top',ha='left')
 
 
 x1, y1=(280,42)
+#width, height=(18.2, 11.1)
 xval,yval = m(x1,y1)
+#m.scatter(x,y,s=30,marker='x',color=dipoles2[key][2],lw=2.5)
 m.scatter(xval,yval,marker='x',color='red',lw=2.5)
+#m.ellipse(x1,y1, width, height,100,facecolor='grey',alpha=0.5,linewidth=0,zorder=1)  # only needed for ellipse contour
 xval,yval = m(x1-180.0, -1.0*y1)
 m.scatter(xval,yval,marker='x',color='red',lw=2.5)
-x, y = m(x1+3.0, y1+2.0)
+#m.ellipse(x1-180.0, -1.0*y1,width, height,100,facecolor='grey',alpha=0.5,linewidth=0,zorder=1)
+x, y = m(x1+77.0, y1+2.0)
 ax2.text(x,y,'CMB kinematic dipole',color='black',fontsize=7,va='top',ha='left')
 
+#---point need to make sure--------------------
 x1, y1=(280,-15)
 width, height=(35,20)
 xval,yval = m(x1,y1)
-m.scatter(xval,yval,color='tan',edgecolor='none',s=20,zorder=2)
-m.ellipse(x1,y1, width, height,100,facecolor='tan',alpha=0.5,linewidth=0,zorder=1)  # only needed for ellipse contour
+m.scatter(xval,yval,color='gold',edgecolor='none',s=20,zorder=2)
+m.ellipse(x1,y1, width, height,100,facecolor='yellow',alpha=0.5,linewidth=0,zorder=1)  # only needed for ellipse contour
 xval,yval = m(x1-180.0, -1.0*y1)
-m.scatter(xval,yval,color='tan',edgecolor='none',s=20,zorder=2)
-m.ellipse(x1-180.0, -1.0*y1,width, height,100,facecolor='tan',alpha=0.5,linewidth=0,zorder=1)
-x, y = m(x1-18.0, y1-7.0)
+m.scatter(xval,yval,color='gold',edgecolor='none',s=20,zorder=2)
+m.ellipse(x1-180.0, -1.0*y1,width, height,100,facecolor='yellow',alpha=0.5,linewidth=0,zorder=1)
+x, y = m(x1+19.0, y1-7.0)
 ax2.text(x,y,'Galaxy cluster',color='black',fontsize=7,va='top',ha='left')
 
-x,y = m(4,0)
-ax2.text(x,y,r'(0,0)',color='black',fontsize=10,va='bottom',ha='left')
-x,y = m(180.01,0)
-ax2.text(x,y,r'(180,0)',color='black',fontsize=10,va='center',ha='right')
+x1, y1=(238.2,28.8)
+width, height=(9,9)
+xval,yval = m(x1,y1)
+m.scatter(xval,yval,color='green',edgecolor='none',s=20,zorder=2)
+m.ellipse(x1,y1, width, height,100,facecolor='green',alpha=0.5,linewidth=0,zorder=1)  # only needed for ellipse contour
+xval,yval = m(x1-180.0, -1.0*y1)
+m.scatter(xval,yval,color='green',edgecolor='none',s=20,zorder=2)
+m.ellipse(x1-180.0, -1.0*y1,width, height,100,facecolor='green',alpha=0.7,linewidth=0,zorder=1)
+x, y = m(x1+10.0, y1-3.0)
+ax2.text(x,y,'CatWISE dipole',color='black',fontsize=7,va='top',ha='left')
+
+x1, y1=(48.8, -5.6)
+width, height=(17.2,14.3)
+xval,yval = m(x1,y1)
+m.scatter(xval,yval,color='grey',edgecolor='none',s=20,zorder=2)
+m.ellipse(x1,y1, width, height,100,facecolor='grey',alpha=0.7,linewidth=0,zorder=1)  # only needed for ellipse contour
+xval,yval = m(x1-180.0, -1.0*y1)
+m.scatter(xval,yval,color='grey',edgecolor='none',s=20,zorder=2)
+m.ellipse(x1-180.0, -1.0*y1,width, height,100,facecolor='grey',alpha=0.7,linewidth=0,zorder=1)
+x, y = m(x1+19.0, y1-5.0)
+ax2.text(x,y,'dipole in the',color='black',fontsize=7,va='top',ha='left')
+x, y = m(x1+25.0, y1-9.0)
+ax2.text(x,y,'cosmological parameters',color='black',fontsize=7,va='top',ha='left')
+
+
+#####0819
+x1, y1=(264,-17)
+xval,yval = m(x1,y1)
+m.scatter(xval,yval,marker='+',color='black',lw=2.0)
+x, y = m(x1+10.0, y1+8.4)
+ax2.text(x,y,'$max(S_-)$',color='black',fontsize=7,va='top',ha='left')
+
+x1, y1=(260,48)
+xval,yval = m(x1,y1)
+m.scatter(xval,yval,marker='+',color='black',lw=2.0)
+x, y = m(x1-7.0, y1+3)
+ax2.text(x,y,'$max(S_+)$',color='black',fontsize=7,va='top',ha='left')
+
+# Pole labels on the sphere
+x,y = m(-2,0)
+ax2.text(x,y,r'(0,0)',color='black',fontsize=9,va='bottom',ha='left')
+#x,y = m(188,3)
+#ax2.text(x,y,r'(180,0)',color='black',fontsize=9,va='center',ha='right')
 x,y = m(0,-90)
-ax2.text(x,y,r'(0,-90)',color='black',fontsize=10,va='top',ha='center')
+ax2.text(x,y,r'(0,-90)',color='black',fontsize=9,va='top',ha='center')
 x,y = m(0,90)
-ax2.text(x,y,r'(0,90)',color='black',fontsize=10,va='bottom',ha='center')
-x,y = m(180,0)
-ax2.text(x,y,r'(180,0)',color='black',fontsize=10,va='center',ha='left')
+ax2.text(x,y,r'(0,90)',color='black',fontsize=9,va='bottom',ha='center')
+x,y = m(178,3)
+ax2.text(x,y,r'(180,0)',color='black',fontsize=9,va='center',ha='left')
 # Sub-labels on the axes:
 for b in (-60,-30,30,60):
     x,y = m(180,b)
@@ -404,9 +388,10 @@ for b in (-60,-30,30,60):
     if b>0:
         ax2.text(x,y,r'$%d^{\circ}$'%b,color='black',fontsize=10,va='bottom',ha='left')
     for l in (60,120,240,300):
-        x,y = m(l+1,0)
+        x,y = m(l-1,0)
         ax2.text(x,y,r"$%d^{\circ}$"%l,color='black',fontsize=8,va='bottom',ha='left')
 
+#plt.tight_layout()
 if '--save' in sys.argv:
     fname = 'example/sdss_example1.png'
     plt.savefig(fname,bbox_inches='tight', pad_inches=0)  
